@@ -19,15 +19,22 @@
             <a href="#" class="hover:text-gray-200 font-medium">Services</a>
             <a href="#" class="hover:text-gray-200 font-medium">Contact</a>
         </div>
-        <a href="login.html"
+        {% if user is none %}
+        <a href="/"
+            class="bg-white text-indigo-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300">
+            Login
+        </a>
+        {% else %}
+        <a href="/userlogout"
             class="bg-white text-indigo-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300">
             Logout
         </a>
+        {% endif %}
     </nav>
 
     <!-- Hero Section -->
     <section class="flex flex-col items-center justify-center text-center py-20 px-6">
-        <h2 class="text-4xl md:text-5xl font-bold mb-4">Welcome to <span class="text-yellow-300">MyWebsite</span> 🚀
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Welcome, <span class="text-yellow-300">{{user}}</span> 🚀
         </h2>
         <p class="text-lg md:text-xl text-white/90 max-w-2xl mb-8">
             Your one-stop platform to explore modern web technologies, learn coding, and grow your skills.
