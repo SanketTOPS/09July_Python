@@ -54,3 +54,18 @@ def otpverify(request):
         else:
             msg="Sorry!Verfication faild....Try again!"
     return render(request,'otpverify.html',{'msg':msg})
+
+def notes(request):
+    user=request.session.get("user")
+    cuser=UserSignup.objects.get(email=user)
+    if request.method=='POST':
+        form=NotesForm(request.POST,request.FILES)
+        if form.is_valid():
+            x=form.save(commit=False)
+            x.status="Pending"
+            x.user=cuser
+            x.save()
+            print("Notes Submitted Successfully!")
+        else:
+            print(form.errors)
+    return render(request,'notes.html',{'user':user})

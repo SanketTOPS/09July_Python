@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submitted Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-indigo-700 text-white min-h-screen py-6 px-4">
+        <h2 class="text-2xl font-semibold text-center mb-8">Admin Panel</h2>
+        <nav class="space-y-4">
+            <a href="#" class="block py-2 px-4 rounded hover:bg-indigo-600">Dashboard</a>
+            <a href="/adminapp/admin_userdata" class="block py-2 px-4 rounded hover:bg-indigo-600">Users</a>
+            <a href="/adminapp/admin_notesdata" class="block py-2 px-4 rounded hover:bg-indigo-600">Notes</a>
+            <a href="/adminapp/admin_logout"
+                class="block py-2 px-4 bg-red-600 hover:bg-red-500 rounded mt-10">Logout</a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6">
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">Submitted Notes</h1>
+            <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">+ Upload Notes</button>
+        </div>
+
+        <!-- Table -->
+        <div class="bg-white p-6 rounded-xl shadow-md overflow-x-auto">
+            <table class="min-w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-200 border-b text-gray-700">
+                        <th class="p-3">#</th>
+                        <th class="p-3">Uploaded_at</th>
+                        <th class="p-3">User</th>
+                        <th class="p-3">Title</th>
+                        <th class="p-3">Description</th>
+                        <th class="p-3">Subject</th>
+                        <th class="p-3">Note's File</th>
+                        <th class="p-3">Status</th>
+                        <th class="p-3">Updated_at</th>
+                        <th class="p-3 text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in notesdata %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-3">{{i.id}}</td>
+                        <td class="p-3">{{i.uploaded_at}}</td>
+                        <td class="p-3">{{i.user.fullname}}</td>
+                        <td class="p-3">{{i.title}}</td>
+                        <td class="p-3">{{i.desc}}</td>
+                        <td class="p-3">{{i.subject}}</td>
+                        <td class="p-3 text-indigo-600 underline cursor-pointer">{{i.notes_file}}</td>
+                        <td class="p-3 text-gray-600 font-semibold">{{i.status}}</td>
+                        <td class="p-3">{{i.updated_at}}</td>
+                        <td class="p-3 text-center space-x-2">
+                            <button
+                                class="bg-green-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Approve</button>
+                            <button class="bg-red-600 text-white px-3 py-1 rounded hover:bg-gray-700">Reject</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+
+</html>

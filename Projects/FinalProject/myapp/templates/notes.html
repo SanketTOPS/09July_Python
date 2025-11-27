@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Website</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md fixed w-full top-0 left-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+
+            <!-- Logo -->
+            <h1 class="text-2xl font-bold text-blue-600">NotesApp</h1>
+
+            <!-- Menu -->
+            <ul class="hidden md:flex space-x-6 font-medium">
+                <li><a href="#" class="text-gray-700 hover:text-blue-600">Home</a></li>
+                <li><a href="#" class="text-gray-700 hover:text-blue-600">Profile</a></li>
+                <li><a href="#" class="text-gray-700 hover:text-blue-600">Notes</a></li>
+                <li><a href="#" class="text-gray-700 hover:text-blue-600">About</a></li>
+                <li><a href="#" class="text-gray-700 hover:text-blue-600">Contact</a></li>
+            </ul>
+
+            <!-- Login Signup -->
+            <div class="hidden md:flex space-x-3">
+
+                {% if user is none %}
+                <a href="/login"
+                    class="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition">Login</a>
+                <a href="/signup"
+                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Signup</a>
+
+                {% else %}
+                <div class="relative group">
+                    <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
+                        {{user}} ▼
+                    </button>
+
+                    <!-- Dropdown List -->
+                    <div class="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg hidden group-hover:block">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Update Profile</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Logout</a>
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden focus:outline-none">
+                <span class="text-3xl">&#9776;</span>
+            </button>
+
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-4 pb-4">
+            <a href="#" class="block py-2 text-gray-700">Home</a>
+            <a href="#" class="block py-2 text-gray-700">Profile</a>
+            <a href="#" class="block py-2 text-gray-700">Notes</a>
+            <a href="#" class="block py-2 text-gray-700">About</a>
+            <a href="#" class="block py-2 text-gray-700">Contact</a>
+
+            <div class="mt-3 space-x-3">
+                <button class="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg">Login</button>
+                <button class="px-4 py-2 bg-blue-600 text-white rounded-lg">Signup</button>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Notes Form Start -->
+    <!-- Notes Submission Form Section -->
+    <section class="pt-28 pb-16 bg-gray-100">
+
+        <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-xl p-8">
+
+            <!-- Title -->
+            <h2 class="text-3xl font-semibold text-blue-600 text-center mb-6">
+                Submit Your Notes
+            </h2>
+
+            <!-- Django Form -->
+            <form method="POST" enctype="multipart/form-data" class="space-y-6">
+                {% csrf_token %}
+
+                <!-- Title -->
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">Title</label>
+                    <input type="text" name="title" required
+                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        placeholder="Enter notes title">
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">Description</label>
+                    <textarea name="desc" rows="4" required
+                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        placeholder="Write a short description..."></textarea>
+                </div>
+
+                <!-- Subject Dropdown -->
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">Subject</label>
+                    <select name="subject" required
+                        class="w-full px-4 py-2 border rounded-lg bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <option value="">Select Subject</option>
+                        <option value="python">Python</option>
+                        <option value="django">Django</option>
+                        <option value="flask">Flask</option>
+                        <option value="html">HTML/CSS</option>
+                        <option value="database">Database</option>
+                    </select>
+                </div>
+
+                <!-- File Upload -->
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">Upload File</label>
+
+                    <input type="file" name="notes_file" required
+                        class="w-full px-4 py-2 border rounded-lg bg-white cursor-pointer focus:ring-2 focus:ring-blue-500 focus:outline-none">
+
+                    <p class="text-sm text-gray-500 mt-1">
+                        Allowed: PDF, DOCX, PPTX, TXT (Max size: 10 MB)
+                    </p>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit"
+                    class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                    Submit Notes
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+    <!-- Notes Form End -->
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-10">
+        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8">
+
+            <div>
+                <h3 class="text-xl font-semibold mb-3">MyWebsite</h3>
+                <p class="text-gray-300">A place to learn, grow and build your digital skills.</p>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-semibold mb-3">Quick Links</h3>
+                <ul class="space-y-2 text-gray-300">
+                    <li>Home</li>
+                    <li>Profile</li>
+                    <li>Notes</li>
+                    <li>About</li>
+                    <li>Contact</li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-semibold mb-3">Contact Info</h3>
+                <p>Email: info@example.com</p>
+                <p>Phone: +91 9876543210</p>
+            </div>
+
+        </div>
+
+        <p class="text-center text-gray-400 mt-8">
+            © 2025 MyWebsite. All rights reserved.
+        </p>
+    </footer>
+
+    <!-- Slider Script -->
+    <script>
+        const slider = document.querySelector(".slider");
+        let index = 0;
+
+        function slideImages() {
+            index = (index + 1) % 3;
+            slider.style.transform = `translateX(-${index * 100}%)`;
+        }
+
+        setInterval(slideImages, 3000);
+
+        // Mobile menu toggle
+        document.getElementById("menu-btn").addEventListener("click", () => {
+            document.getElementById("mobile-menu").classList.toggle("hidden");
+        });
+    </script>
+
+</body>
+
+</html>
