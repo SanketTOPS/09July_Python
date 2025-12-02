@@ -1,5 +1,6 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from myapp.models import *
+from datetime import datetime
 
 # Create your views here.
 def admin_login(request):
@@ -15,7 +16,11 @@ def admin_login(request):
     return render(request,'admin_login.html')
 
 def admin_dashboard(request):
-    return render(request,'admin_dashboard.html')
+    u=UserSignup.objects.all()
+    n=mynotes.objects.all()
+    totaluser=len(u)
+    totalnotes=len(n)
+    return render(request,'admin_dashboard.html',{'totaluser':totaluser,'totalnotes':totalnotes,'u':u})
 
 def admin_userdata(request):
     data=UserSignup.objects.all()
@@ -27,3 +32,24 @@ def admin_notesdata(request):
 
 def admin_logout(request):
     return redirect("admin_login")
+
+
+def notes_approve(reuqest,id):
+    nid=get_object_or_404(mynotes,id=id)
+    nid.status="Approve"
+    nid.updated_at=datetime.now()
+    nid.save()
+    
+    #Email Sending Code
+    
+    return redirect('admin_notesdata')
+    
+def notes_reject(reuqest,id):
+    nid=get_object_or_404(mynotes,id=id)
+    nid.status="Reject"
+    nid.updated_at=datetime.now()
+    nid.save()
+    
+    #Email Sending Code
+    
+    return redirect('admin_notesdata')

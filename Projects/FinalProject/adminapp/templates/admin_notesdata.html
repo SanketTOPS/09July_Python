@@ -14,7 +14,7 @@
     <aside class="w-64 bg-indigo-700 text-white min-h-screen py-6 px-4">
         <h2 class="text-2xl font-semibold text-center mb-8">Admin Panel</h2>
         <nav class="space-y-4">
-            <a href="#" class="block py-2 px-4 rounded hover:bg-indigo-600">Dashboard</a>
+            <a href="/adminapp/admin_dashboard" class="block py-2 px-4 rounded hover:bg-indigo-600">Dashboard</a>
             <a href="/adminapp/admin_userdata" class="block py-2 px-4 rounded hover:bg-indigo-600">Users</a>
             <a href="/adminapp/admin_notesdata" class="block py-2 px-4 rounded hover:bg-indigo-600">Notes</a>
             <a href="/adminapp/admin_logout"
@@ -55,13 +55,15 @@
                         <td class="p-3">{{i.title}}</td>
                         <td class="p-3">{{i.desc}}</td>
                         <td class="p-3">{{i.subject}}</td>
-                        <td class="p-3 text-indigo-600 underline cursor-pointer">{{i.notes_file}}</td>
+                        <td class="p-3 text-indigo-600 underline cursor-pointer"><a
+                                href="{{i.notes_file.url}}">{{i.notes_file.url}}</a></td>
                         <td class="p-3 text-gray-600 font-semibold">{{i.status}}</td>
                         <td class="p-3">{{i.updated_at}}</td>
                         <td class="p-3 text-center space-x-2">
-                            <button
-                                class="bg-green-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Approve</button>
-                            <button class="bg-red-600 text-white px-3 py-1 rounded hover:bg-gray-700">Reject</button>
+                            <a href="/adminapp/notes_approve/{{i.id}}"
+                                class="bg-green-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Approve</a>
+                            <a href="/adminapp/notes_reject/{{i.id}}"
+                                class="bg-red-600 text-white px-3 py-1 rounded hover:bg-gray-700">Reject</a>
                         </td>
                     </tr>
                     {% endfor %}
