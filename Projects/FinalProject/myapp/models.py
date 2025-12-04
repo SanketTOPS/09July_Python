@@ -25,3 +25,8 @@ class mynotes(models.Model):
     updated_at=models.DateTimeField(blank=True,null=True)
     
     
+class contactus(models.Model):
+    created=models.DateTimeField(auto_now_add=True)
+    fullname=models.CharField(max_length=50)
+    email=models.EmailField()
+    msg=models.TextField()

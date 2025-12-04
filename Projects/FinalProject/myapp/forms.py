@@ -10,3 +10,8 @@ class NotesForm(forms.ModelForm):
     class Meta:
         model=mynotes
         fields=['title','desc','subject','notes_file']
+        
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model=contactus
+        fields='__all__'

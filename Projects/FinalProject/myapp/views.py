@@ -3,6 +3,7 @@ from .forms import *
 from django.core.mail import send_mail
 import random
 from FinalProject import settings
+from django.contrib.auth import logout
 
 # Create your views here.
 def index(request):
@@ -15,9 +16,12 @@ def login(request):
         u_password=request.POST["password"]
         
         user=UserSignup.objects.filter(email=u_email,password=u_password)
+        userid=UserSignup.objects.get(email=u_email)
+        print(userid.id)
         if user:
             print("Login Successfully!")
             request.session["user"]=u_email
+            request.session["userid"]=userid.id
             return redirect('/')
         else:
             print("Error!Login Faild...")
@@ -69,3 +73,35 @@ def notes(request):
         else:
             print(form.errors)
     return render(request,'notes.html',{'user':user})
+
+def userlogout(request):
+    logout(request)
+    return redirect("/")
+    
+def profile(request):
+    uid=request.session.get("userid")
+    user=UserSignup.objects.get(id=uid)
+    if request.method=='POST':
+        updateReq=SignupForm(request.POST,instance=user)
+        if updateReq.is_valid():
+            updateReq.save()
+            print("Profile Updatetd!")
+            return redirect("profile")
+        else:
+            print(updateReq.errors)
+    return render(request,'profile.html',{'user':user})
+
+def about(request):
+    return render(request,'about.html')
+
+def contact(request):
+    if request.method=='POST':
+        newContact=ContactForm(request.POST)
+        if newContact.is_valid():
+            newContact.save()
+            
+            #Success Email Sending
+            
+        else:
+            print(newContact.errors)
+    return render(request,'contact.html')
