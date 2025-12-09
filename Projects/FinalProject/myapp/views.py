@@ -4,6 +4,7 @@ from django.core.mail import send_mail
 import random
 from FinalProject import settings
 from django.contrib.auth import logout
+import requests
 
 # Create your views here.
 def index(request):
@@ -21,7 +22,7 @@ def login(request):
         if user:
             print("Login Successfully!")
             request.session["user"]=u_email
-            request.session["userid"]=userid.id
+            request.session["userid"]=userid.id        
             return redirect('/')
         else:
             print("Error!Login Faild...")
@@ -41,6 +42,12 @@ def signup(request):
             to_ID=[request.POST['email']]
             
             send_mail(subject=sub,message=mail_msg,from_email=from_ID,recipient_list=to_ID)
+            
+            #SMS OTP
+            '''url = "https://www.fast2sms.com/dev/bulkV2?authorization=KEodGZf5czOn3eCxJPHQUYtS86Rbmrv1MyuViag4hs7N2DujvzKSw5MN9mRryb3LC4DsIHiWph78&message=Dear%20User%21%20Thanks%20for%20registration%20with%20us%21Your%20One%20Time%20Password%20is%20&route=q&numbers=8866440478"
+            headers = {"accept": "application/json"}
+            response = requests.get(url, headers=headers)
+            print(response.text)'''
             return redirect('otpverify')
         else:
             print(form.errors)
