@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-52m&tl722@+9gjohz6wj(r=w(uw2z7=5p5)=uv8z(&69cqj#y1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'FinalProject.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "09julprojectdb",
+        "NAME": "new09julprojectdb",
         "USER": "root",
         "PASSWORD": "",
         "HOST": "127.0.0.1",
